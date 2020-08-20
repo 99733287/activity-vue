@@ -1,28 +1,47 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <a-config-provider :locale="locale">
+      <router-page></router-page>
+    </a-config-provider>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  import router from "@/router"
+  import Vue from "vue"
+  import routerPage from "@/page/routerPage";
+  import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
+  import {ConfigProvider} from 'ant-design-vue';
+
+  Vue.use(ConfigProvider);
+
+
+  export default {
+    name: 'App',
+    router,
+    data() {
+      return {
+        locale: zhCN,
+      };
+    },
+    components: {
+      routerPage,
+    },
+
   }
-}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+  }
+
+  body {
+    background: #f0f2f5 !important;
+  }
+
 </style>
