@@ -19,7 +19,7 @@
         <router-link class="btn-item" to="/user/partakeList"> <a-button>参与列表</a-button></router-link>
         <router-link class="btn-item" to="/user/activityList"> <a-button>主持列表</a-button></router-link>
         <router-link class="btn-item" to="/user/partakeList"> <a-button>修改密码</a-button></router-link>
-        <router-link class="btn-item" to="/user/partakeList"> <a-button>退出登录</a-button></router-link>
+        <a-button @click="logout">退出登录</a-button>
       </div>
     </a-card>
 
@@ -73,11 +73,13 @@
   import {Card,Row,Col,Statistic,Avatar,Button} from "ant-design-vue";
   let mods ={Card,Row,Col,Statistic,Avatar,Button}
   for(let key in mods){
-    Vue.use(mods[key]);
-  }
-  for(let key in mods){
     import("ant-design-vue/lib/"+key.toLowerCase()+"/style/css");
   }
+
+  for(let key in mods){
+    Vue.use(mods[key]);
+  }
+
 
 
   export default {
@@ -89,58 +91,63 @@
         API:require("../js/utils")
       }
     },
+    methods:{
+      logout(){
+        this.API.logout((data)=>{
+           this.$router.replace("/login");
+        });
+      }
+    },
     mounted(){
       let context = this;
-      this.$.ajax("/my/actData",{
-        "contentType":"application/json",
-        success:function (data) {
-          let mydata = data.data;
-          let arr =new Array(6);
-          for( let key in mydata){
-            let obj = {value:mydata[key],name:"",type:"ACT"}
-            let index = 0;
-            let state =-1;
-            switch (key) {
-              case "actAll":
-                obj.name = "所有主持";
-                index = 0;
-                break;
-              case "actFinish":
-                obj.name = "完结的主持";
-                index = 1;
-                state = context.API.ACT_STATE_FINISH;
-                break;
-              case "actIng":
-                obj.name = "进行中的主持";
-                index = 2;
-                state = context.API.ACT_STATE_TASK;
-                break;
-              case "partAll":
-                obj.type = "PART";
-                obj.name = "所有参与";
-                index = 3;
-                break;
-              case "partFinish":
-                obj.type = "PART";
-                obj.name = "完结的参与";
-                state=context.API.PART_STATE_SUCCESS;
-                index = 4;
-                break;
-              case "partIng":
-                obj.type = "PART";
-                obj.name = "进行中的参与";
-                state=context.API.PART_STATE_ING
-                index = 5;
-                break;
-            }
-            obj.state=state;
-            obj.type==="PART"?'':obj.type="ACT";
-            obj.path=obj.type==="PART"?"/user/partakeList":"/user/activityList"
-            arr[index]=obj;
+      this.API.getMyActData(data=>{
+        let mydata = data.data;
+        let arr =new Array(6);
+        for( let key in mydata){
+          let obj = {value:mydata[key],name:"",type:"ACT"}
+          let index = 0;
+          let state =-1;
+          switch (key) {
+            case "actAll":
+              obj.name = "所有主持";
+              index = 0;
+              break;
+            case "actFinish":
+              obj.name = "完结的主持";
+              index = 1;
+              state = context.API.ACT_STATE_FINISH;
+              break;
+            case "actIng":
+              obj.name = "进行中的主持";
+              index = 2;
+              state = context.API.ACT_STATE_TASK;
+              break;
+            case "partAll":
+              obj.type = "PART";
+              obj.name = "所有参与";
+              index = 3;
+              break;
+            case "partFinish":
+              obj.type = "PART";
+              obj.name = "完结的参与";
+              state=context.API.PART_STATE_SUCCESS;
+              index = 4;
+              break;
+            case "partIng":
+              obj.type = "PART";
+              obj.name = "进行中的参与";
+              state=context.API.PART_STATE_ING
+              index = 5;
+              break;
           }
-          context.list=arr;
+          obj.state=state;
+          obj.type==="PART"?'':obj.type="ACT";
+          obj.path=obj.type==="PART"?"/user/partakeList":"/user/activityList"
+          arr[index]=obj;
         }
+        context.list=arr;
       })
+
     }
   }
 </script>

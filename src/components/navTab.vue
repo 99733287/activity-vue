@@ -19,12 +19,6 @@
         <a-menu-item key="/about">
           <router-link to="/about">关于</router-link>
         </a-menu-item>
-        <a-menu-item key="/login">
-          <router-link to="/login">登录</router-link>
-        </a-menu-item>
-        <a-menu-item key="/register">
-          <router-link to="/register">注册</router-link>
-        </a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout-content  class="layout-padding"  style="padding-top: 16px">

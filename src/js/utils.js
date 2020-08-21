@@ -170,6 +170,11 @@ function codeCheck(data) {
             console.log("请求错误")
         }
     }
+    switch (data.code) {
+        case  410 :
+            this.$router.replace("/login");
+            break; //未登录
+    }
 
 }
 
@@ -181,10 +186,18 @@ function errorCheck(data) {
     }
     if (data.status === 410) {
         console.log("未登录")
+        location.href="/login";
     }
 
 }
 
+function logout(resp) {
+$.ajax("/user/logout",{
+    contentType:"application/json",
+    success:(data)=>resp.call(this,data),
+    error:(data)=>resp.call(this,data)
+})
+}
 
 var FORM_TYPE_SINGEL = 0;
 var FORM_TYPE_MUTE = 1;
@@ -488,6 +501,7 @@ export  {
     getMyPartakes,
     partReset,
   partPass,
+  logout,
     getFormItemAnalysis,
     getMyActData,getPartsByState,
     joinAct,saveActForm,createAct,releaseAct,submitActForm

@@ -25,9 +25,9 @@
     <a-card class="card-item" title="功能模块" :bordered="false">
       <div class="btng">
         <router-link :to="'/listForm/'+$route.params.act">
-          <a-button>创建表单</a-button>
+          <a-button :disabled="!(info!=null&&info.state==API.ACT_STATE_CREATE)">创建表单</a-button>
         </router-link>
-        <a-popconfirm placement="top" ok-text="确认"   cancel-text="取消" @confirm="releAct">
+        <a-popconfirm placement="top" ok-text="确认"   cancel-text="取消" @confirm="releAct" v-if="info!=null&&info.state==API.ACT_STATE_CREATE">
           <template slot="title">
             <p>请确认信息是否完整且争取,发布后将不允许修改</p>
           </template>
@@ -197,7 +197,7 @@
   }
 
   for (let key in mods) {
-    import("ant-design-vue/lib/" + key.toLowerCase() + "/style/css");
+ //   import("ant-design-vue/lib/" + key.toLowerCase() + "/style/css");
   }
 
   export default {
@@ -273,6 +273,14 @@
         let id = this.$route.params.act;
         this.API.releaseAct(id, (data) => {
           console.log(data);
+          if (data.code!=0){
+            this.$message.error("失败,"+data.msg+" code:"+data.code);
+          }else{
+            this.$notification.open({
+              message: '成功',
+              description:'活动发布成功啦，用户可以参与并提交了',
+          });
+          }
         })
       },
       checkState(state) {

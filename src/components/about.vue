@@ -24,7 +24,7 @@
     let str = key.replace(/([A-Z])/g,"-$&").toLowerCase();
     str= str.replace(/^-*/g,"")
     Vue.use(mods[key]);
-    import("ant-design-vue/lib/"+str+"/style/css");
+    //import("ant-design-vue/lib/"+str+"/style/css");
   }
 
   export default {

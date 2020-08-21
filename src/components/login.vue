@@ -91,6 +91,8 @@
                 if (data.code==0){
                   console.log("成功");
                   context.$router.replace("/user")
+                }else {
+                  context.$message.error(data.msg);
                 }
                 console.log(data);
               },
