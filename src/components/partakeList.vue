@@ -4,19 +4,19 @@
       <a-row>
         <a-col :span="6">
           <h3>所有参与</h3>
-          <p>669</p>
+          <p>{{analysis[API.PART_STATE_ALL]}}</p>
         </a-col>
         <a-col :span="6">
           <h3>已完成</h3>
-          <p>23</p>
+          <p>{{analysis[API.PART_STATE_SUCCESS]}}</p>
         </a-col>
         <a-col :span="6">
           <h3>进行中</h3>
-          <p>123</p>
+          <p>{{analysis[API.PART_STATE_ING]}}</p>
         </a-col>
         <a-col :span="6">
           <h3>审核中</h3>
-          <p>69</p>
+          <p>{{analysis[API.PART_STATE_CHECK]}}</p>
         </a-col>
       </a-row>
     </a-card>
@@ -88,7 +88,14 @@
       return {
         data:[],
         utils,
+        API:utils,
         PART_state:PART_STATE_ALL,
+        analysis:{
+          [utils.PART_STATE_ING]:0,
+          [utils.PART_STATE_ALL]:0,
+          [utils.PART_STATE_SUCCESS]:0,
+          [utils.PART_STATE_CHECK]:0,
+        },
         page:{curr:1,size:10,total:0}
       }
     },
@@ -116,7 +123,16 @@
         this.PART_state = this.$route.params.state;
       }
       this.pageChange(this.page.curr,this.page.size);
-    }
+
+      this.API.getUserPartAnalysis(data=> {
+          this.analysis[this.API.PART_STATE_ALL]=data.data.reduce((a,b)=>{
+            this.analysis[b.state]=b.count;
+           return a+b.count
+          },0)
+      })
+    },
+
+
   }
 </script>
 

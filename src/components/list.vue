@@ -104,7 +104,8 @@
         total: 50,
         API,
         selectedAct:null,
-        data : []}
+        data : []
+      }
     },
     methods:{
       handleOk(){

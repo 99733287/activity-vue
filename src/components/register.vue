@@ -2,6 +2,37 @@
   <a-card :bordered="false">
     <div class="register—area">
       <a-form :form="form" @submit="handleSubmit">
+        <a-form-item v-bind="formItemLayout" label="用户名">
+          <a-input
+                  v-decorator="[
+          'username',
+          {
+            rules: [
+              {
+                required: true,
+                message: '请输用户名',
+              },
+            ],
+          },
+        ]"
+          />
+        </a-form-item>
+        <a-form-item v-bind="formItemLayout">
+      <span slot="label">
+        昵称&nbsp;
+        <a-tooltip title="代表您的名称">
+          <a-icon type="question-circle-o" />
+        </a-tooltip>
+      </span>
+          <a-input
+                  v-decorator="[
+          'fullName',
+          {
+            rules: [{ required: true, message: '请输入昵称', whitespace: true }],
+          },
+        ]"
+          />
+        </a-form-item>
         <a-form-item v-bind="formItemLayout" label="邮箱">
           <a-input
                   v-decorator="[
@@ -60,22 +91,7 @@
                   @blur="handleConfirmBlur"
           />
         </a-form-item>
-        <a-form-item v-bind="formItemLayout">
-      <span slot="label">
-        昵称&nbsp;
-        <a-tooltip title="What do you want others to call you?">
-          <a-icon type="question-circle-o" />
-        </a-tooltip>
-      </span>
-          <a-input
-                  v-decorator="[
-          'nickname',
-          {
-            rules: [{ required: true, message: '请输入昵称', whitespace: true }],
-          },
-        ]"
-          />
-        </a-form-item>
+
         <a-form-item v-bind="formItemLayout" label="手机号">
           <a-input
                   v-decorator="[
@@ -97,27 +113,8 @@
             </a-select>
           </a-input>
         </a-form-item>
-        <a-form-item
-                v-bind="formItemLayout"
-                label="邮箱验证"
-                extra="用于确认您的信息正确并确保您以后不丢失账户"
-        >
-          <a-row :gutter="8">
-            <a-col :span="12">
-              <a-input
-                      v-decorator="[
-              'captcha',
-              { rules: [{ required: true, message: '请输入邮箱验证码!' }] },
-            ]"
-              />
-            </a-col>
-            <a-col :span="12">
-              <a-button>获取验证码</a-button>
-            </a-col>
-          </a-row>
-        </a-form-item>
         <a-form-item v-bind="tailFormItemLayout">
-          <a-checkbox name="agreement" v-model="agree">
+          <a-checkbox name="agreement" v-model="agree" >
             我已阅读
             <a href="#" @click="modal1Visible=true">
               使用协议
@@ -141,9 +138,9 @@
               @ok="() => setModal1Visible('ok')"
               @cancel="() => setModal1Visible('cancel')"
       >
-        <p>您同意....</p>
-        <p>您同意....</p>
-        <p>您同意....</p>
+        <p>隐私协议：将使用您的所有数据</p>
+        <p>异议处理：联系管理员,给予用户数据永久删除</p>
+        <p>须知：目前版本为测试版，不确保用户数据完整性，因需求随时下线，且永久销毁数据</p>
       </a-modal>
     </div>
   </a-card>
@@ -167,6 +164,7 @@
     data() {
       return {
         agree:false,
+        API:require("../js/utils"),
         modal1Visible:false,
         confirmDirty: false,
         autoCompleteResult: [],
@@ -211,7 +209,20 @@
         e.preventDefault();
         this.form.validateFieldsAndScroll((err, values) => {
           if (!err) {
+            if (!this.agree){
+              this.$message.warn("请同意用户使用协议");
+              return;
+            }
             console.log('Received values of form: ', values);
+            this.API.register(values,data=>{
+              console.log(data);
+              if (data.code==0){
+                this.$message.success("注册成功");
+                this.router.replace("/login");
+              }else {
+                this.$message.error("失败："+data.msg);
+              }
+            })
           }
         });
       },

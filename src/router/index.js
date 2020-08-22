@@ -19,7 +19,8 @@ const  router=new VueRouter({
     {path:"/listForm/:act",component:()=>{return import("../components/listForm.vue");}},
     {path:"/partake/:id",component:()=>{return import("../components/partake.vue");}},
     {path:"/echart",component:()=>{return import("../components/echart.vue");}},
-    {path:"/test",component:()=>{return import("../components/test.vue");}}
+    {path:"/test",component:()=>{return import("../components/test.vue");}},
+    {path:"/",component:()=>{return import("../components/user.vue");}}
   ]
 });
 

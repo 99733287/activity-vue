@@ -4,19 +4,19 @@
       <a-row>
         <a-col :span="6">
           <h3>所有活动</h3>
-          <p>669</p>
+          <p>{{analysis[API.ACT_STATE_ALL]}}</p>
         </a-col>
         <a-col :span="6">
           <h3>已完成</h3>
-          <p>23</p>
+          <p>{{analysis[API.ACT_STATE_FINISH]}}</p>
         </a-col>
         <a-col :span="6">
           <h3>进行中</h3>
-          <p>123</p>
+          <p>{{analysis[API.ACT_STATE_TASK]}}</p>
         </a-col>
         <a-col :span="6">
           <h3>创建</h3>
-          <p>69</p>
+          <p>{{analysis[API.ACT_STATE_CREATE]}}</p>
         </a-col>
       </a-row>
     </a-card>
@@ -88,20 +88,7 @@
 </template>
 
 <script>
-  const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-  ];
+
 
   const utils = require("../js/utils")
   import Vue from "vue"
@@ -119,7 +106,14 @@
   export default {
     name: "activityList",
     data() {
-      return {utils,data,page:{count:0,curr:1,size:10},ACT_state:utils.ACT_STATE_ALL}
+      return {utils,data:[],page:{count:0,curr:1,size:10},ACT_state:utils.ACT_STATE_ALL,API:utils,
+        analysis:{
+          [utils.ACT_STATE_CREATE]:0,
+          [utils.ACT_STATE_TASK]:0,
+          [utils.ACT_STATE_ALL]:0,
+          [utils.ACT_STATE_FINISH]:0,
+        },
+      }
     },
     methods:{
       pageChange(page,size){
@@ -141,6 +135,12 @@
     created(){
       this.ACT_state=this.$route.params.state==null?this.ACT_state:this.$route.params.state
       this.pageChange(this.page.curr,this.page.size);
+      this.API.getUserActAnalysis(data=> {
+        this.analysis[this.API.ACT_STATE_ALL]=data.data.reduce((a,b)=>{
+          this.analysis[b.state]=b.count;
+          return a+b.count
+        },0)
+      })
     }
   }
 </script>
