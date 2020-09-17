@@ -70,7 +70,7 @@
 
 <script>
   import Vue from "vue"
-  import {Card,Row,Col,Statistic,Avatar,Button} from "ant-design-vue";
+  import {Card,Row,Col,Statistic,Avatar,Button,Dropdown} from "ant-design-vue";
   let mods ={Card,Row,Col,Statistic,Avatar,Button}
   for(let key in mods){
     import("ant-design-vue/lib/"+key.toLowerCase()+"/style/css");

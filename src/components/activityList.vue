@@ -101,7 +101,6 @@
 
 
   for (let key in mods) {
-   // import("ant-design-vue/lib/" + key.toLowerCase() + "/style/css");
   }
   export default {
     name: "activityList",
