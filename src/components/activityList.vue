@@ -126,7 +126,7 @@
         })
       },
       checkState(state){
-        if (state==utils.ACT_STATE) return;
+        if (state===utils.ACT_STATE) return;
         this.ACT_state =state;
         this.pageChange(1,this.page.size);
       }

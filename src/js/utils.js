@@ -168,7 +168,7 @@ function codeCheck(data) {
   }
   switch (data.code) {
     case  410 :
-      this.$router.replace("/login");
+       window.location.href="/login"
       break; //未登录
   }
 
@@ -448,7 +448,7 @@ function getMyPartListByState(state, page, resp) {
 // 获取表单项的用户提交选项分析
 function getFormItemAnalysis(formId, resp) {
 
-  var url = "/data/part_form/" + formId;
+  var url = "/data/partForm/" + formId;
   $.ajax({
     url: url,
     "contentType": "application/json",

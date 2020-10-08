@@ -102,6 +102,7 @@
       let context = this;
       this.API.getMyActData(data=>{
         let mydata = data.data;
+        if (data.code!=0) return
         let arr =new Array(6);
         for( let key in mydata){
           let obj = {value:mydata[key],name:"",type:"ACT"}
