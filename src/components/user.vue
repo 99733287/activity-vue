@@ -5,10 +5,21 @@
         <div style="width: 300px;text-align: center;margin: 0 auto">
           <a-avatar :size="64" icon="user"/>
           <div>
-            <h2>Hello world</h2>
+            <h2>{{userInfo?userInfo.username:'您好！'}}</h2>
             <p>欢迎来到这个世界，你好，我爱这个世界！</p>
           </div>
         </div>
+        <a-descriptions style=";margin: 0 auto" v-if="userInfo!=null">
+          <a-descriptions-item label="用户名">
+           {{userInfo.username}}
+          </a-descriptions-item>
+          <a-descriptions-item label="邮箱">
+            {{userInfo.email}}
+          </a-descriptions-item>
+          <a-descriptions-item label="昵称">
+            {{userInfo.fullName}}
+          </a-descriptions-item>
+        </a-descriptions>
       </div>
     </a-card>
 
@@ -18,7 +29,7 @@
         <router-link class="btn-item" to="/create"> <a-button>创建活动</a-button></router-link>
         <router-link class="btn-item" to="/user/partakeList"> <a-button>参与列表</a-button></router-link>
         <router-link class="btn-item" to="/user/activityList"> <a-button>主持列表</a-button></router-link>
-        <router-link class="btn-item" to="/user/partakeList"> <a-button>修改密码</a-button></router-link>
+        <a-button @click="vis=true">修改密码</a-button>
         <a-button @click="logout">退出登录</a-button>
       </div>
     </a-card>
@@ -42,38 +53,43 @@
       </a-row>
     </a-card>
 
-    <a-card title="进行中" :bordered="false">
-      <div slot="extra" class="ing-btng">
-        <router-link  to="/user/partakeList/" >参与列表</router-link>
-        <router-link  to="/user/activityList/"> 主持列表</router-link>
-      </div>
-        <a-row :gutter="[24,24]">
-        <a-col :span="8" v-for="i in list" :key="i.name" :xs="24" :sm="12" :md="8">
-          <a-card class="card-body act-card">
-            <div class="act-head">
-              <a-avatar size="small" icon="user"  style="margin-right: 8px"/>上课签到 <span style="float: right">参与数:266</span>
-            </div>
-            <p class="act-desc">这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助</p>
-            <div>
-              <span>骗你学计算机</span>
-              <span style="float: right">2020-08-10</span>
-            </div>
-          </a-card>
-        </a-col>
+<!--    <a-card title="进行中" :bordered="false">-->
+<!--      <div slot="extra" class="ing-btng">-->
+<!--        <router-link  to="/user/partakeList/" >参与列表</router-link>-->
+<!--        <router-link  to="/user/activityList/"> 主持列表</router-link>-->
+<!--      </div>-->
+<!--        <a-row :gutter="[24,24]">-->
+<!--        <a-col :span="8" v-for="i in list" :key="i.name" :xs="24" :sm="12" :md="8">-->
+<!--          <a-card class="card-body act-card">-->
+<!--            <div class="act-head">-->
+<!--              <a-avatar size="small" icon="user"  style="margin-right: 8px"/>上课签到 <span style="float: right">参与数:266</span>-->
+<!--            </div>-->
+<!--            <p class="act-desc">这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助这是本次签到的描述，简单描述使用场景以及相关帮助</p>-->
+<!--            <div>-->
+<!--              <span>骗你学计算机</span>-->
+<!--              <span style="float: right">2020-08-10</span>-->
+<!--            </div>-->
+<!--          </a-card>-->
+<!--        </a-col>-->
 
-      </a-row>
+<!--      </a-row>-->
 
-    </a-card>
+<!--    </a-card>-->
 
+    <update-psw :visible="vis"
+    @close="vis=false"
+    @open="vis=true"
+    ></update-psw>
   </div>
 </template>
 
 <script>
   import Vue from "vue"
-  import {Card,Row,Col,Statistic,Avatar,Button,Dropdown} from "ant-design-vue";
-  let mods ={Card,Row,Col,Statistic,Avatar,Button}
-  for(let key in mods){
-    import("ant-design-vue/lib/"+key.toLowerCase()+"/style/css");
+  import updatePsw from "./updatePsw";
+  import {Card,Row,Col,Statistic,Avatar,Button,Descriptions} from "ant-design-vue";
+  let mods ={Card,Row,Col,Statistic,Avatar,Button,Descriptions}
+  for (let key in mods) {
+    Vue.use(mods[key]);
   }
 
   for(let key in mods){
@@ -84,8 +100,13 @@
 
   export default {
     name: "user",
+    components:{
+      updatePsw
+    },
     data() {
       return {
+        vis :false,
+        userInfo :null,
         list: [],
         actData:null,
         API:require("../js/utils")
@@ -148,7 +169,12 @@
         }
         context.list=arr;
       })
-
+      this.API.myInfo(data=>{
+        if (data.code==0){
+          this.userInfo =data.data;
+        }
+        console.log(data);
+      })
     }
   }
 </script>

@@ -40,7 +40,8 @@
         <a-list-item :key="index" v-for="(item, index) in data">
           <a-descriptions class="act-list-item" ref="descriptions" >
             <div slot="title" >
-              <a-avatar icon="user" size="small" /> <span style="margin-left: 4px">
+            <!--  <a-avatar icon="user" size="small" /> -->
+              <span style="margin-left: 4px">
             {{item.name}}
           </span>
               <a-tag color="#2db7f5" style="float: right">{{utils.ACT_STATE[item.state]}}</a-tag>

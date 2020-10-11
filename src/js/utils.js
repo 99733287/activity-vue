@@ -500,6 +500,34 @@ function createAct(data, resp) {
 }
 
 
+function changePassword(psw,old,resp){
+
+  $.ajax({
+    url:"/user/changePassword",
+    type:"post",
+    data:{psw:psw,old:old},
+    success: function (data) {
+      codeCheck(data);
+      resp(data);
+    },
+    error: errorCheck
+    }
+  )
+}
+
+function  myInfo(resp){
+  $.ajax({
+        url:"/user",
+    contentType: "application/json",
+        success: function (data) {
+          codeCheck(data);
+          resp(data);
+        },
+        error: errorCheck
+      }
+  )
+}
+
 export {
   PART_STATE_ALL,
   PART_STATE_WAIT,
@@ -546,6 +574,10 @@ export {
   createAct,
   releaseAct,
   submitActForm,
-  register
+  register,
+  changePassword,
+    myInfo
 
 }
+
+

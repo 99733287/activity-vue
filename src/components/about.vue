@@ -5,7 +5,7 @@
       <div style="width: 300px;text-align: center;margin: 0 auto">
         <a-avatar :size="64" :src="logo" shape="circle"/>
         <div>
-          <h2 style="margin-top: 20px">天天活动</h2>
+          <h2 style="margin-top: 20px">天天活动 <i style="font-size: 12px;color: #13c2c2">V2</i> </h2>
           <p>欢迎来到这个世界，你好，我爱这个世界！</p>
         </div>
       </div>

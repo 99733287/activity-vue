@@ -24,8 +24,7 @@
     <a-layout-content  class="layout-padding"  style="padding-top: 16px">
       <div :style="{ minHeight: '280px' }">
         <slot style="text-align: center">
-            <h1 style="font-size: 30px;text-align: center">404</h1>
-          <span>页面飞走了 <router-link to="/">返回主页</router-link></span>
+          <a-skeleton active  style="background: white;padding: 16px ; " >  </a-skeleton>
         </slot>
       </div>
     </a-layout-content>
@@ -71,13 +70,15 @@
 
 <script>
   import Vue from "vue"
-  import {Layout,Menu,Breadcrumb} from "ant-design-vue"
+  import {Layout,Menu,Breadcrumb,Skeleton,Spin} from "ant-design-vue"
   import "ant-design-vue/lib/layout/style/css"
   import "ant-design-vue/lib/menu/style/css"
   import "ant-design-vue/lib/breadcrumb/style/css"
   Vue.use(Layout);
   Vue.use(Menu);
   Vue.use(Breadcrumb);
+  Vue.use(Skeleton);
+  Vue.use(Spin);
 
   export default {
     name: "navTab",

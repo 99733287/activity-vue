@@ -45,10 +45,7 @@
               {{ item.act.name }}
             <router-link :to="'/partake/'+item.id" style="float: right">前往详情</router-link>
             </a>
-            <a-avatar
-                    slot="avatar"
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            />
+
           </a-list-item-meta>
         </a-list-item>
       </a-list>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="search">
-      <a-input-search placeholder="检索内容" size="large" v-model="searchValue"  enter-button @search="search"/>
+      <a-input-search placeholder="检索内容" size="large" v-model="searchValue"  enter-button="搜索" @search="search"/>
     </div>
 
     <a-card style="margin-top: 20px">
@@ -14,7 +14,8 @@
       <a-list-item :key="item.id" slot="renderItem" slot-scope="item">
         <a-descriptions class="act-list-item" ref="descriptions" >
           <div slot="title" >
-            <a-avatar icon="user" size="small" /> <span style="margin-left: 4px">
+<!--            <a-avatar icon="user" size="small" /> -->
+            <span style="margin-left: 4px">
             {{item.name}}
           </span>
             <a-tag color="#2db7f5" style="float: right">{{API.ACT_STATE_CREATE==item.state?'创建':API.ACT_STATE_TASK==item.state?'进行中':'已完结'}}</a-tag>
@@ -67,7 +68,8 @@
     <a-modal v-model="visible" title="活动详情确定参与报名吗" @ok="handleOk">
       <div class="card-body act-card" v-if="selectedAct!=null">
         <div class="act-head">
-          <a-avatar size="small" icon="user"  style="margin-right: 8px"/>{{selectedAct.name}} <span style="float: right">参与数:{{selectedAct.participants}}</span>
+<!--          <a-avatar size="small" icon="user"  style="margin-right: 8px"/>-->
+          {{selectedAct.name}} <span style="float: right">参与数:{{selectedAct.participants}}</span>
         </div>
         <p class="act-desc">
           {{selectedAct.describe}}
